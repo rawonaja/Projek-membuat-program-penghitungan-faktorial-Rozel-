@@ -1,0 +1,74 @@
+/*  File name     : TugasFaktorial.c
+    Programmer    : Rozel Tasri Orama
+    NIM           : 24343023
+    Program       : Program menghitung faktorial dengan fungsi rekursi
+*/
+#include <stdio.h>
+#include <time.h>
+
+// Fungsi rekursi dengan ternary operator
+long long int faktorial(int val) {
+    return (val == 0 ? 1 : val * faktorial(val - 1));
+} 
+
+// Fungsi untuk menampilkan langkah-langkah faktorialnya
+long long int show(long long int num) {
+    if (num == 0) printf("1");
+    else {
+        for (long long int i = num; i > 0; i--) {
+            if (num == i) printf("%lld", i);
+            else printf(" * %lld", i);
+        }
+    }  
+}
+
+int main(int argc, const char *argv[]) {    
+    long long int num;        // Deklarasi variabel
+    char pilihan;
+    
+    // Mendeklarasikan variabel untuk pengukuran waktu
+    clock_t start, end;
+    double time_taken;
+
+    printf("\nSelamat datang di program perhitungan faktorial!!!\n");
+        
+    // Perulangan agar program dapat diulang berkali-kali
+    do {
+        printf("Masukkan angka yang akan dicari faktorialnya (0 - 30): ");
+
+        // Mengecek apakah nilainya bisa dihitung (tidak lebih dari 30!)
+        do {
+            scanf("%lld", &num);
+            // Mengecek apakah angka yang diinput valid atau tidak
+            if (num > 30) printf("Angka tidak valid karena terlalu besar, masukkan ulang angka yang baru (0 - 30): ");
+            else if (num < 0) printf("Angka tidak valid karena kurang dari 0, masukkan ulang angka yang baru (0 - 30): ");
+            else {
+                // Menampilkan langkah-langkah dan hasil dari faktorialnya
+                printf("\nHasil dari "); 
+                printf("%lld! = ", num);
+                show(num);
+                printf(" = ");
+                
+                // Mulai pengukuran waktu eksekusi
+                start = clock();
+                long long int hasil = faktorial(num); // Panggil fungsi faktorial
+                end = clock();
+                
+                // Menghitung waktu yang dibutuhkan
+                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+
+                // Menampilkan hasil dan waktu eksekusi
+                printf("%lld \n", hasil);
+                printf("Waktu eksekusi: %f detik\n", time_taken);
+            }
+        } while (num > 30 || num < 0);
+        
+        printf("\nIngin mencari faktorial lain? (y/n): ");
+        scanf(" %c", &pilihan);
+
+    } while (pilihan == 'y' || pilihan == 'Y');  
+
+    printf("\nTerima kasih telah menggunakan program ini\n");
+
+    return 0;
+}
